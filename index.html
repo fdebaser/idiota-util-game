@@ -2,75 +2,23 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Idiota Útil RPG – Missão 1</title>
-  <style>
-    body {
-      background-color: #fffcd1;
-      font-family: 'Courier New', monospace;
-      padding: 40px;
-      color: #222;
-    }
-    .container {
-      max-width: 700px;
-      margin: auto;
-      border: 2px solid green;
-      padding: 30px;
-      background: white;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
-    }
-    h1 {
-      color: green;
-      text-align: center;
-    }
-    .scene {
-      margin-top: 30px;
-    }
-    button {
-      margin-top: 20px;
-      padding: 12px 24px;
-      font-size: 16px;
-      border: 2px solid green;
-      background: yellow;
-      cursor: pointer;
-    }
-    .ending {
-      font-weight: bold;
-      color: red;
-      margin-top: 40px;
-    }
-  </style>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Idiota Útil — A Missão Que Nunca Termina™</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
   <div class="container">
-    <h1>IDIOTA ÚTIL – MISSÃO 1</h1>
-    <div class="scene" id="scene">
-      <p>Você acorda no QG Patriota. O grupo do Zap tá em fúria: “O comunismo chegou na praça da bandeira!”</p>
-      <p>O Capitão Poul Kapika envia uma ordem: “VÁ DEFENDER A PRAÇA!”</p>
+    <h1>IDIOTA ÚTIL™</h1>
+    <p>🇧🇷 A Missão Que Nunca Termina™</p>
+    <button onclick="startMission()">INICIAR MISSÃO</button>
 
-      <button onclick="escolha(1)">Gritar 'MINHA BANDEIRA JAMAIS SERÁ VERMELHA!'</button>
-      <button onclick="escolha(2)">Esperar o Mito se pronunciar primeiro</button>
-      <button onclick="escolha(3)">Checar o Zap antes de agir</button>
+    <div id="game" style="display: none;">
+      <p>🫡 Bem-vindo ao QG dos Patriotas™.</p>
+      <p>🎯 Missão: Confronte o Professor das Estatísticas.</p>
+      <strong>VOCÊ AINDA NÃO CONCLUIU. AGUARDE 72 HORAS.</strong>
     </div>
-
-    <div class="ending" id="ending"></div>
   </div>
 
-  <script>
-    function escolha(opcao) {
-      let final = document.getElementById("ending");
-      let cena = document.getElementById("scene");
-
-      if (opcao === 1) {
-        final.innerHTML = "Você gritou tão alto que o comunismo ficou confuso. Mas ninguém apareceu. Você é promovido a 'Patriota Solo de Praça'.";
-      } else if (opcao === 2) {
-        final.innerHTML = "Você esperou... e esperou... e esperou. 72 horas depois, o Mito mandou só uma figurinha.";
-      } else if (opcao === 3) {
-        final.innerHTML = "Você se perdeu nos áudios, memes e fake news. Ao tentar sair de casa, esqueceu por que lutava.";
-      }
-
-      cena.style.display = "none";
-    }
-  </script>
+  <script src="script.js"></script>
 </body>
 </html>

@@ -1,6 +1,6 @@
 body {
   font-family: 'Courier New', monospace;
-  background: #fffcd1;
+  background-color: #fffdd1;
   color: #222;
   text-align: center;
   padding: 50px;
@@ -17,9 +17,14 @@ button {
   background-color: yellow;
   border: 2px solid green;
   cursor: pointer;
-  margin-top: 20px;
+  margin-top: 24px;
 }
 
 button:hover {
-  background-color: #dfffab;
+  background-color: #fffba9;
+}
+
+#game {
+  margin-top: 40px;
+  font-size: 20px;
 }

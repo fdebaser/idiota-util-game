@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Idiota Útil — Fase 1 Jogável</title>
+  <style>
+    body {
+      background-color: #f2f2f2;
+      margin: 0;
+      overflow: hidden;
+    }
+    canvas {
+      display: block;
+      margin: auto;
+      background: #98fb98;
+      border: 2px solid green;
+    }
+  </style>
+</head>
+<body>
+  <canvas id="gameCanvas" width="400" height="400"></canvas>
+
+  <script>
+    const canvas = document.getElementById("gameCanvas");
+    const ctx = canvas.getContext("2d");
+
+    const player = {
+      x: 180,
+      y: 180,
+      size: 20,
+      color: "yellow",
+      dx: 0,
+      dy: 0
+    };
+
+    const npc = {
+      x: 280,
+      y: 160,
+      size: 20,
+      color: "red"
+    };
+
+    function drawPlayer() {
+      ctx.fillStyle = player.color;
+      ctx.fillRect(player.x, player.y, player.size, player.size);
+    }
+
+    function drawNPC() {
+      ctx.fillStyle = npc.color;
+      ctx.fillRect(npc.x, npc.y, npc.size, npc.size);
+    }
+
+    function clear() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+    }
+
+    function newPos() {
+      player.x += player.dx;
+      player.y += player.dy;
+
+      // limite da tela
+      if (player.x < 0) player.x = 0;
+      if (player.y < 0) player.y = 0;
+      if (player.x + player.size > canvas.width) player.x = canvas.width - player.size;
+      if (player.y + player.size > canvas.height) player.y = canvas.height - player.size;
+    }
+
+    function update() {
+      clear();
+      drawNPC();
+      drawPlayer();
+      newPos();
+
+      requestAnimationFrame(update);
+    }
+
+    function move(e) {
+      const speed = 2;
+      if (e.key === "ArrowRight") {
+        player.dx = speed;
+        player.dy = 0;
+      } else if (e.key === "ArrowLeft") {
+        player.dx = -speed;
+        player.dy = 0;
+      } else if (e.key === "ArrowUp") {
+        player.dy = -speed;
+        player.dx = 0;
+      } else if (e.key === "ArrowDown") {
+        player.dy = speed;
+        player.dx = 0;
+      }
+    }
+
+    function stop(e) {
+      if (
+        ["ArrowRight", "ArrowLeft", "ArrowUp", "ArrowDown"].includes(e.key)
+      ) {
+        player.dx = 0;
+        player.dy = 0;
+      }
+    }
+
+    document.addEventListener("keydown", move);
+    document.addEventListener("keyup", stop);
+
+    update();
+  </script>
+</body>
+</html>

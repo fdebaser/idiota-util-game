@@ -16,14 +16,28 @@
       background: #98fb98;
       border: 2px solid green;
     }
+    #dialogo {
+      position: absolute;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: white;
+      border: 2px solid green;
+      padding: 12px 20px;
+      font-family: 'Courier New', monospace;
+      font-size: 18px;
+      display: none;
+    }
   </style>
 </head>
 <body>
   <canvas id="gameCanvas" width="400" height="400"></canvas>
+  <div id="dialogo"></div>
 
   <script>
     const canvas = document.getElementById("gameCanvas");
     const ctx = canvas.getContext("2d");
+    const dialogo = document.getElementById("dialogo");
 
     const player = {
       x: 180,
@@ -41,14 +55,23 @@
       color: "red"
     };
 
-    function drawPlayer() {
-      ctx.fillStyle = player.color;
-      ctx.fillRect(player.x, player.y, player.size, player.size);
-    }
+    const item = {
+      x: 100,
+      y: 300,
+      size: 20,
+      color: "blue",
+      visible: true
+    };
 
-    function drawNPC() {
-      ctx.fillStyle = npc.color;
-      ctx.fillRect(npc.x, npc.y, npc.size, npc.size);
+    let hasTalked = false;
+    let hasItem = false;
+    let finished = false;
+
+    function drawEntity(entity) {
+      if (entity.visible !== false) {
+        ctx.fillStyle = entity.color;
+        ctx.fillRect(entity.x, entity.y, entity.size, entity.size);
+      }
     }
 
     function clear() {
@@ -59,20 +82,54 @@
       player.x += player.dx;
       player.y += player.dy;
 
-      // limite da tela
+      // Limites da tela
       if (player.x < 0) player.x = 0;
       if (player.y < 0) player.y = 0;
       if (player.x + player.size > canvas.width) player.x = canvas.width - player.size;
       if (player.y + player.size > canvas.height) player.y = canvas.height - player.size;
     }
 
+    function colisao(a, b) {
+      return (
+        Math.abs(a.x - b.x) < 20 &&
+        Math.abs(a.y - b.y) < 20
+      );
+    }
+
     function update() {
       clear();
-      drawNPC();
-      drawPlayer();
+      drawEntity(npc);
+      drawEntity(item);
+      drawEntity(player);
       newPos();
 
+      if (colisao(player, npc) && !hasTalked) {
+        mostrarDialogo("General Rarola: Kapika, o comunismo está nos mictórios públicos!");
+        hasTalked = true;
+      }
+
+      if (colisao(player, item) && item.visible) {
+        item.visible = false;
+        hasItem = true;
+        mostrarDialogo("Kapika: Agora sim, estou pronto para gritar na praça.");
+      }
+
+      if (hasTalked && hasItem && !finished) {
+        setTimeout(() => {
+          mostrarDialogo("VOCÊ AINDA NÃO CONCLUIU. AGUARDE 72 HORAS.");
+        }, 3000);
+        finished = true;
+      }
+
       requestAnimationFrame(update);
+    }
+
+    function mostrarDialogo(texto) {
+      dialogo.textContent = texto;
+      dialogo.style.display = "block";
+      setTimeout(() => {
+        dialogo.style.display = "none";
+      }, 3000);
     }
 
     function move(e) {
